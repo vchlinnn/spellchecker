@@ -26,37 +26,64 @@ public class SpellChecker {
 
     /** A Node of the SpellChecker structure. */
     private class Node {
-        // TODO: implement me!
+        private boolean isWord; 
+        private Node[] children; 
+
+        public Node() {
+            this.isWord = false;
+            this.children = new Node[NUM_LETTERS];
+        }
     }
 
     /** The root of the SpellChecker */
     private Node root;
 
     public SpellChecker(List<String> dict) {
-        // TODO: implement me!
+        root = new Node();
+        for (String word : dict) {
+            add(word);
+        }
     }
 
     public void add(String word) {
-        // TODO: implement me!
+        Node current = root;
+        for (char c : word.toLowerCase().toCharArray()) {
+            int index = c - 'a';
+            if (index < 0 || index >= NUM_LETTERS) {
+                continue; 
+            }
+            if (current.children[index] == null) {
+                current.children[index] = new Node();
+            }
+            current = current.children[index];
+        }
+        current.isWord = true;
     }
 
     public boolean isWord(String word) {
-        // TODO: implement me!
-        return false;
+        Node current = root;
+        for (char c : word.toLowerCase().toCharArray()) {
+            int index = c - 'a';
+            if (index < 0 || index >= NUM_LETTERS) {
+                return false; // Invalid character
+            }
+            if (current.children[index] == null) {
+                return false; // No path for this character
+            }
+            current = current.children[index];
+        }
+        return current.isWord;
     }
 
     public List<String> getOneCharCompletions(String word) {
-        // TOOD: implement me!
         return null;
     }
 
     public List<String> getOneCharEndCorrections(String word) {
-        // TODO: implement me!
         return null;
     }
 
     public List<String> getOneCharCorrections(String word) {
-        // TODO: implement me!
         return null;
     }
 
